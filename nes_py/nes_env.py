@@ -4,7 +4,7 @@ import glob
 import itertools
 import os
 import sys
-import gym
+import gymnasium as gym
 from gymnasium.spaces import Box
 from gymnasium.spaces import Discrete
 import numpy as np
