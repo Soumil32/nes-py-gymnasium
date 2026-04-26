@@ -5,8 +5,8 @@ import itertools
 import os
 import sys
 import gym
-from gym.spaces import Box
-from gym.spaces import Discrete
+from gymnasium.spaces import Box
+from gymnasium.spaces import Discrete
 import numpy as np
 from ._rom import ROM
 from ._image_viewer import ImageViewer
