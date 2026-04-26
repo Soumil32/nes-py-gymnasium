@@ -69,7 +69,7 @@ setup(
     ext_modules=[LIB_NES_ENV],
     zip_safe=False,
     install_requires=[
-        'gymnasium>=1.3',
+        'gymnasium>=0.29.1,<1.3.0',
         'numpy>=1.18.5',
         'pyglet<=1.5.21,>=1.4.0',
         'tqdm>=4.48.2',
