@@ -85,8 +85,8 @@ class NESEnv(gym.Env):
 
     # relevant meta-data about the environment
     metadata = {
-        'render.modes': ['rgb_array', 'human'],
-        'video.frames_per_second': 60
+        'render_modes': ['rgb_array', 'human'],
+        'render_fps': 60
     }
 
     # the legal range for rewards for this environment
@@ -103,12 +103,13 @@ class NESEnv(gym.Env):
     # action space is a bitmap of button press values for the 8 NES buttons
     action_space = Discrete(256)
 
-    def __init__(self, rom_path):
+    def __init__(self, rom_path, render_mode=None):
         """
         Create a new NES environment.
 
         Args:
             rom_path (str): the path to the ROM for the environment
+            render_mode (str, optional): the mode for rendering the environment
 
         Returns:
             None
@@ -135,6 +136,7 @@ class NESEnv(gym.Env):
             raise ValueError(msg.format(rom.mapper))
         # create a dedicated random number generator for the environment
         self.np_random = np.random.RandomState()
+        self.render_mode = render_mode
         # store the ROM path
         self._rom_path = rom_path
         # initialize the C++ object for running the environment
@@ -360,21 +362,18 @@ class NESEnv(gym.Env):
         if self.viewer is not None:
             self.viewer.close()
 
-    def render(self, mode='human'):
+    def render(self):
         """
         Render the environment.
 
         Args:
-            mode (str): the mode to render with:
-            - human: render to the current display
-            - rgb_array: Return an numpy.ndarray with shape (x, y, 3),
-              representing RGB values for an x-by-y pixel image
+            None
 
         Returns:
             a numpy array if mode is 'rgb_array', None otherwise
 
         """
-        if mode == 'human':
+        if self.render_mode == 'human':
             # if the viewer isn't setup, import it and create one
             if self.viewer is None:
                 # get the caption for the ImageViewer
@@ -392,11 +391,11 @@ class NESEnv(gym.Env):
                 )
             # show the screen on the image viewer
             self.viewer.show(self.screen)
-        elif mode == 'rgb_array':
+        elif self.render_mode == 'rgb_array':
             return self.screen
         else:
             # unpack the modes as comma delineated strings ('a', 'b', ...)
-            render_modes = [repr(x) for x in self.metadata['render.modes']]
+            render_modes = [repr(x) for x in self.metadata['render_modes']]
             msg = 'valid render modes are: {}'.format(', '.join(render_modes))
             raise NotImplementedError(msg)
 
