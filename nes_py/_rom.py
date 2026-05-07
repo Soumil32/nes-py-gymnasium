@@ -57,7 +57,7 @@ class ROM(object):
     @property
     def prg_rom_size(self):
         """Return the size of the PRG ROM in KB."""
-        return 16 * self.header[4]
+        return int(16 * self.header[4])
 
     @property
     def chr_rom_size(self):
