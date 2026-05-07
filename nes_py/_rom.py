@@ -62,7 +62,7 @@ class ROM(object):
     @property
     def chr_rom_size(self):
         """Return the size of the CHR ROM in KB."""
-        return 8 * self.header[5]
+        return int(8 * self.header[5])
 
     @property
     def flags_6(self):
@@ -82,7 +82,7 @@ class ROM(object):
         if size == 0:
             size = 1
 
-        return 8 * size
+        return int(8 * size)
 
     @property
     def flags_9(self):
@@ -104,8 +104,8 @@ class ROM(object):
     @property
     def _zero_fill(self):
         """Return the zero fill bytes at the end of the header."""
-        return self.header[11:].sum()
-
+        return int(self.header[11:].sum())
+    
     #
     # MARK: Header Flags
     #
